@@ -1,6 +1,8 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../data/model/payment_method.dart';
+
 part 'order_state.dart';
 
 class OrderCubit extends Cubit<OrderState> {
@@ -24,18 +26,8 @@ class OrderCubit extends Cubit<OrderState> {
     );
   }
 
-  void updatePaymentMethod({
-    required String method,
-    String? cardNumber,
-    String? phone,
-  }) {
-    emit(
-      state.copyWith(
-        paymentMethod: method,
-        cardNumber: cardNumber,
-        phone: phone,
-      ),
-    );
+  void updatePaymentMethod(PaymentMethod paymentMethod) {
+    emit(state.copyWith(paymentMethod: paymentMethod));
   }
 
   void submitOrder() {

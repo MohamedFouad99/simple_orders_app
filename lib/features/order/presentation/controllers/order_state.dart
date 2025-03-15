@@ -7,9 +7,7 @@ class OrderState extends Equatable {
   final String packageType;
   final double weight;
   final String? notes;
-  final String paymentMethod;
-  final String? cardNumber;
-  final String? paymentPhone;
+  final PaymentMethod? paymentMethod;
 
   const OrderState({
     this.name = '',
@@ -18,9 +16,7 @@ class OrderState extends Equatable {
     this.packageType = '',
     this.weight = 0.0,
     this.notes,
-    this.paymentMethod = '',
-    this.cardNumber,
-    this.paymentPhone,
+    this.paymentMethod,
   });
 
   OrderState copyWith({
@@ -30,9 +26,7 @@ class OrderState extends Equatable {
     String? packageType,
     double? weight,
     String? notes,
-    String? paymentMethod,
-    String? cardNumber,
-    String? paymentPhone,
+    PaymentMethod? paymentMethod,
   }) {
     return OrderState(
       name: name ?? this.name,
@@ -42,8 +36,6 @@ class OrderState extends Equatable {
       weight: weight ?? this.weight,
       notes: notes ?? this.notes,
       paymentMethod: paymentMethod ?? this.paymentMethod,
-      cardNumber: cardNumber ?? this.cardNumber,
-      paymentPhone: paymentPhone ?? this.paymentPhone,
     );
   }
 
@@ -56,8 +48,6 @@ class OrderState extends Equatable {
     weight,
     notes,
     paymentMethod,
-    cardNumber,
-    paymentPhone,
   ];
 }
 

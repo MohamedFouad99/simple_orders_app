@@ -15,12 +15,14 @@ class DropDownItem extends StatelessWidget {
     required this.items,
     required this.text,
     required this.value,
+    this.validator,
   });
 
   final String? value;
   final String text;
   final List<DropdownMenuItem<String>> items;
   final void Function(String?)? onChanged;
+  final String? Function(String?)? validator;
   @override
   /// Builds the widget tree for the dropdown item.
   ///
@@ -36,7 +38,6 @@ class DropDownItem extends StatelessWidget {
   /// item is returned in a [SizedBox] with a height of 54.h.
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 54.h,
       child: DropdownButtonFormField<String>(
         value: value,
         hint: Text(text, style: TextStyles.font14DarkGreyRegular),
@@ -45,6 +46,7 @@ class DropDownItem extends StatelessWidget {
         onChanged: onChanged,
         borderRadius: BorderRadius.circular(12),
         dropdownColor: ColorsManager.white,
+        validator: validator,
         icon: const Icon(
           Icons.keyboard_arrow_down,
           color: ColorsManager.darkBlue,
