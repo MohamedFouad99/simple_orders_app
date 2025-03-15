@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../../../core/theming/colors.dart';
-import '../../../../../core/theming/style.dart';
+import '../theming/colors.dart';
+import '../theming/style.dart';
 
 // date: 15 March 2025
 // by: Fouad
@@ -51,6 +51,15 @@ class AppTextFormField extends StatelessWidget {
   });
 
   @override
+  /// Builds a customizable `TextFormField` widget.
+  ///
+  /// The widget provides various customization options such as `hintText`,
+  /// `suffixIcon`, `prefixIcon`, and `backgroundColor`. The `validator` and
+  /// `onChanged` functions are used to handle input validation and changes,
+  /// respectively. The text field can be set to read-only mode via the
+  /// `readOnly` parameter. The `TextFormField` widget's appearance is further
+  /// customized using the `InputDecoration` class, which allows setting borders,
+  /// padding, and styles for hint text and input text.
   Widget build(BuildContext context) {
     return TextFormField(
       onTap: onTap,

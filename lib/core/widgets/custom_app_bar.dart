@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../../../core/theming/colors.dart';
-import '../../../../../core/theming/style.dart';
+import '../theming/colors.dart';
+import '../theming/style.dart';
 
 // date: 15 March 2025
 // by: Fouad

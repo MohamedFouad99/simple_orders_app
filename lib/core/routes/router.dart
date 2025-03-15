@@ -4,6 +4,10 @@ import '../../features/order/presentation/ui/screens/package_details_screen.dart
 import '../../features/order/presentation/ui/screens/payment_screen.dart';
 import '../../features/order/presentation/ui/screens/review_screen.dart';
 
+//date: 15 March 2025
+//by: Fouad
+//last modified at: 15 March 2025
+//description: Create a GoRouter object that defines the routes for the application.
 final GoRouter router = GoRouter(
   initialLocation: '/customer-info',
   routes: [

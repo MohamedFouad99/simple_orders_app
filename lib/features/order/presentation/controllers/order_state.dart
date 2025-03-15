@@ -1,4 +1,9 @@
 part of 'order_cubit.dart';
+//date: 15 March 2025
+//by: Fouad
+//last modified at: 15 March 2025
+//description: Create a class that represents a state for the order feature.
+//The class takes a name, phone, address, packageType, weight, notes, and paymentMethod parameters.
 
 class OrderState extends Equatable {
   final String name;
@@ -19,6 +24,11 @@ class OrderState extends Equatable {
     this.paymentMethod,
   });
 
+  /// Creates a new [OrderState] by copying the current state and updating the given
+  /// properties.
+  ///
+  /// If a property is not provided, the current state's value for that property is
+  /// used instead.
   OrderState copyWith({
     String? name,
     String? phone,
