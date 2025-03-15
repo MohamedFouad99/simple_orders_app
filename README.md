@@ -1,16 +1,47 @@
-# simple_orders_app
+# 📦 Order Management App
 
-A new Flutter project.
+## 🚀 Overview
 
-## Getting Started
+#### The Order Management App is a Flutter-based application that allows users to create and submit orders step by step. It includes customer info, package details, payment selection, and review screens. The app follows Clean Architecture, Bloc for state management, and GoRouter for navigation.
 
-This project is a starting point for a Flutter application.
+[📹 Watch Demo](https://www.loom.com/share/9ced8b8caeaa42748e74493955434989)
 
-A few resources to get you started if this is your first Flutter project:
+# 🎯 Features
+#### ✅ Multi-Step Order Creation (Customer Info → Package Details → Payment → Review & Submit)
+#### ✅ Payment Method Selection (Credit Card, Cash on Delivery, Pay Later)
+#### ✅ State Management using Bloc (Cubit)
+#### ✅ Pagination & Validation for Forms
+#### ✅ Dark Mode & Responsive UI
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+# 🏗 Project Structure
+#### 📂 lib/
+#### ┣ 📂 core/ (Global utilities, constants, helpers)
+###### ┃ ┣ 📂 routes/ (GoRouter setup for navigation)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+###### ┃ ┣ 📂 theme/ (Custom themes & colors)
+#### ┣ 📂 features/order/ (Main feature module)
+###### ┃ ┣ 📂 data/ (Repositories & Data Sources)
+
+###### ┃ ┃ ┣ 📂 models/ (Data models for order and payment)
+
+###### ┃ ┣ 📂 domain/ (Business logic & use cases)
+
+###### ┃ ┣ 📂 presentation/ (UI & State Management)
+
+###### ┃ ┃ ┣ 📂 screens/ (Customer Info, Payment, Review, etc.)
+
+###### ┃ ┃ ┣ 📂 widgets/ (Reusable UI components)
+
+###### ┃ ┃ ┣ 📂 cubit/ (OrderCubit for state management)
+
+┣ 📜 main.dart (Entry point of the app
+
+# 🛠 Technologies Used
+
+#### Flutter (Latest Stable)
+
+#### Bloc (Cubit) for State Management
+
+#### GoRouter for Navigation
+
+#### Lottie for Animations
