@@ -9,9 +9,10 @@
 # 🎯 Features
 #### ✅ Multi-Step Order Creation (Customer Info → Package Details → Payment → Review & Submit)
 #### ✅ Payment Method Selection (Credit Card, Cash on Delivery, Pay Later)
+#### ✅ Implements a PaymentMethod interface for easy extension of new payment types.
 #### ✅ State Management using Bloc (Cubit)
-#### ✅ Pagination & Validation for Forms
-#### ✅ Dark Mode & Responsive UI
+#### ✅ Validation for Forms
+#### ✅ Responsive UI
 
 # 🏗 Project Structure
 #### 📂 lib/
