@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -11,6 +13,7 @@ import '../../controllers/order_cubit.dart';
 import '../widgets/custom_app_bar.dart';
 import '../widgets/custom_button.dart';
 import 'package:lottie/lottie.dart';
+import 'package:flutter_svg/svg.dart';
 
 class ReviewScreen extends StatelessWidget {
   const ReviewScreen({super.key});
@@ -43,7 +46,7 @@ class ReviewScreen extends StatelessWidget {
                       width: 90.w,
                       fit: BoxFit.fill,
                     ),
-                    const SizedBox(height: 10),
+                    verticalSpace(18),
                     Text(
                       'Order Submitted Successfully!',
                       style: TextStyles.font18DarkBlueBold,
@@ -62,14 +65,22 @@ class ReviewScreen extends StatelessWidget {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _buildSectionTitle('Customer Info'),
+                  _buildSectionTitle(
+                    title: 'Customer Info',
+                    editRoute: '/customer-info',
+                    context: context,
+                  ),
                   verticalSpace(6),
                   _buildDetailRow('Name', state.name),
                   _buildDetailRow('Phone', state.phone),
                   _buildDetailRow('Address', state.address),
                   Divider(color: ColorsManager.gray, thickness: 0.8),
                   verticalSpace(16),
-                  _buildSectionTitle('Package Details'),
+                  _buildSectionTitle(
+                    context: context,
+                    title: 'Package Details',
+                    editRoute: '/package-details',
+                  ),
                   verticalSpace(6),
                   _buildDetailRow('Package Type', state.packageType),
                   _buildDetailRow('Weight', '${state.weight} kg'),
@@ -77,7 +88,11 @@ class ReviewScreen extends StatelessWidget {
                     _buildDetailRow('Notes', state.notes!),
                   Divider(color: ColorsManager.gray, thickness: 0.8),
                   verticalSpace(16),
-                  _buildSectionTitle('Payment Method'),
+                  _buildSectionTitle(
+                    context: context,
+                    title: 'Payment Method',
+                    editRoute: '/payment',
+                  ),
                   verticalSpace(6),
                   _buildDetailRow(
                     'Method',
@@ -110,8 +125,25 @@ class ReviewScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildSectionTitle(String title) {
-    return Text(title, style: TextStyles.font18DarkBlueBold);
+  Widget _buildSectionTitle({
+    required BuildContext context,
+    required String title,
+    required String editRoute,
+  }) {
+    return Row(
+      children: [
+        Text(title, style: TextStyles.font18DarkBlueBold),
+        horizontalSpace(4),
+        InkWell(
+          onTap: () => context.go(editRoute), // Navigate to edit screen
+          child: SvgPicture.asset(
+            'assets/icons/pen_icon.svg',
+            width: 18.w,
+            color: ColorsManager.secondary,
+          ),
+        ),
+      ],
+    );
   }
 
   Widget _buildDetailRow(String label, String value) {

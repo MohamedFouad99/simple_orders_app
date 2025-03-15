@@ -38,6 +38,7 @@ dependencies:
   # Responsive Design
   flutter_screenutil: ^5.9.3 
   # Navigation
+  flutter_svg: ^2.0.17
   go_router: ^14.8.1
   # Date & Number Formatting
   intl: ^0.20.2

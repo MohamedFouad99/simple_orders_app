@@ -6,7 +6,6 @@ import 'package:simple_orders_app/core/helpers/spacing.dart';
 import 'package:simple_orders_app/core/theming/style.dart';
 import 'package:simple_orders_app/features/order/presentation/ui/widgets/app_text_form_field.dart';
 import '../../../../../core/helpers/app_regex.dart';
-import '../../../../../core/theming/colors.dart';
 import '../../../data/model/credit_card_payment.dart';
 import '../../../data/model/pay_later_payment.dart';
 import '../../controllers/order_cubit.dart';
@@ -23,6 +22,36 @@ class PaymentScreen extends StatefulWidget {
 
 class PaymentScreenState extends State<PaymentScreen> {
   final _formKey = GlobalKey<FormState>();
+  late TextEditingController _cardNumberController;
+  late TextEditingController _phoneNumberController;
+
+  @override
+  void initState() {
+    super.initState();
+    final state = context.read<OrderCubit>().state;
+
+    // Initialize controllers with existing values from OrderCubit
+    _cardNumberController = TextEditingController(
+      text:
+          state.paymentMethod is CreditCardPayment
+              ? (state.paymentMethod as CreditCardPayment).cardNumber
+              : '',
+    );
+
+    _phoneNumberController = TextEditingController(
+      text:
+          state.paymentMethod is PayLaterPayment
+              ? (state.paymentMethod as PayLaterPayment).phoneNumber
+              : '',
+    );
+  }
+
+  @override
+  void dispose() {
+    _cardNumberController.dispose();
+    _phoneNumberController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,9 +86,11 @@ class PaymentScreenState extends State<PaymentScreen> {
                   RadioOptionWidget(method: 'Pay Later', state: state),
 
                   verticalSpace(8),
+
                   // Credit Card Input (Only if Credit Card is selected)
                   if (state.paymentMethod is CreditCardPayment) ...[
                     AppTextFormField(
+                      controller: _cardNumberController, // Set controller
                       hintText: 'Card Number',
                       suffixIcon: const SizedBox(),
                       keyboardType: TextInputType.number,
@@ -84,6 +115,7 @@ class PaymentScreenState extends State<PaymentScreen> {
                   // Phone Number Input (Only if Pay Later is selected)
                   if (state.paymentMethod is PayLaterPayment) ...[
                     AppTextFormField(
+                      controller: _phoneNumberController, // Set controller
                       hintText: 'Phone Number',
                       suffixIcon: const SizedBox(),
                       keyboardType: TextInputType.phone,
@@ -104,6 +136,7 @@ class PaymentScreenState extends State<PaymentScreen> {
                     ),
                     verticalSpace(24),
                   ],
+
                   // Next Button
                   CustomButton(
                     label: 'Next',

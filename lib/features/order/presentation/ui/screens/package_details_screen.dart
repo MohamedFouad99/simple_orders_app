@@ -21,8 +21,25 @@ class PackageDetailsScreen extends StatefulWidget {
 class PackageDetailsScreenState extends State<PackageDetailsScreen> {
   final _formKey = GlobalKey<FormState>();
   String? _packageType;
-  double? _weight;
-  String? _notes;
+  late TextEditingController _weightController;
+  late TextEditingController _notesController;
+  @override
+  void initState() {
+    super.initState();
+    final state = context.read<OrderCubit>().state;
+    _packageType = state.packageType.isEmpty ? null : state.packageType;
+    _weightController = TextEditingController(
+      text: state.weight > 0 ? state.weight.toString() : '',
+    );
+    _notesController = TextEditingController(text: state.notes ?? '');
+  }
+
+  @override
+  void dispose() {
+    _weightController.dispose();
+    _notesController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,6 +85,7 @@ class PackageDetailsScreenState extends State<PackageDetailsScreen> {
                   hintText: 'Weight (kg)',
                   suffixIcon: const SizedBox(),
                   keyboardType: TextInputType.number,
+                  controller: _weightController,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Weight is required';
@@ -78,9 +96,7 @@ class PackageDetailsScreenState extends State<PackageDetailsScreen> {
                     }
                     return null;
                   },
-                  onChanged: (value) {
-                    _weight = double.parse(value);
-                  },
+                  onChanged: (value) {},
                 ),
                 verticalSpace(12),
                 Text('Notes', style: TextStyles.font14DarkBlueRegular),
@@ -92,13 +108,12 @@ class PackageDetailsScreenState extends State<PackageDetailsScreen> {
                     right: 20.w,
                     left: 20.w,
                   ),
+                  controller: _notesController,
                   hintText: 'Delivery Notes (Optional)',
                   suffixIcon: const SizedBox(),
                   keyboardType: TextInputType.text,
                   validator: (value) {},
-                  onChanged: (value) {
-                    _notes = value;
-                  },
+                  onChanged: (value) {},
                 ),
                 verticalSpace(24),
                 CustomButton(
@@ -109,8 +124,8 @@ class PackageDetailsScreenState extends State<PackageDetailsScreen> {
                       // Update Cubit State
                       context.read<OrderCubit>().updatePackageDetails(
                         packageType: _packageType!,
-                        weight: _weight!,
-                        notes: _notes,
+                        weight: double.parse(_weightController.text),
+                        notes: _notesController.text,
                       );
                       context.go('/payment');
                     }

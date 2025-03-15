@@ -19,9 +19,26 @@ class CustomerInfoScreen extends StatefulWidget {
 
 class CustomerInfoScreenState extends State<CustomerInfoScreen> {
   final _formKey = GlobalKey<FormState>();
-  String _name = '';
-  String _phone = '';
-  String _address = '';
+  late TextEditingController _nameController;
+  late TextEditingController _phoneController;
+  late TextEditingController _addressController;
+
+  @override
+  void initState() {
+    super.initState();
+    final state = context.read<OrderCubit>().state;
+    _nameController = TextEditingController(text: state.name);
+    _phoneController = TextEditingController(text: state.phone);
+    _addressController = TextEditingController(text: state.address);
+  }
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    _phoneController.dispose();
+    _addressController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,6 +65,7 @@ class CustomerInfoScreenState extends State<CustomerInfoScreen> {
                 verticalSpace(8),
                 AppTextFormField(
                   hintText: 'Name',
+                  controller: _nameController,
                   suffixIcon: const SizedBox(),
                   keyboardType: TextInputType.text,
                   validator: (value) {
@@ -56,9 +74,7 @@ class CustomerInfoScreenState extends State<CustomerInfoScreen> {
                     }
                     return null;
                   },
-                  onChanged: (value) {
-                    _name = value;
-                  },
+                  onChanged: (value) {},
                 ),
 
                 verticalSpace(12),
@@ -68,7 +84,7 @@ class CustomerInfoScreenState extends State<CustomerInfoScreen> {
                   hintText: 'Phone Number',
                   suffixIcon: const SizedBox(),
                   keyboardType: TextInputType.phone,
-
+                  controller: _phoneController,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Phone is required';
@@ -78,9 +94,7 @@ class CustomerInfoScreenState extends State<CustomerInfoScreen> {
                     }
                     return null;
                   },
-                  onChanged: (value) {
-                    _phone = value;
-                  },
+                  onChanged: (value) {},
                 ),
                 verticalSpace(12),
                 Text('Address', style: TextStyles.font14DarkBlueRegular),
@@ -89,15 +103,14 @@ class CustomerInfoScreenState extends State<CustomerInfoScreen> {
                   hintText: 'Address',
                   suffixIcon: const SizedBox(),
                   keyboardType: TextInputType.text,
+                  controller: _addressController,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Address is required';
                     }
                     return null;
                   },
-                  onChanged: (value) {
-                    _address = value;
-                  },
+                  onChanged: (value) {},
                 ),
                 verticalSpace(24),
                 CustomButton(
@@ -107,9 +120,9 @@ class CustomerInfoScreenState extends State<CustomerInfoScreen> {
                       _formKey.currentState!.save();
                       // Update Cubit State
                       context.read<OrderCubit>().updateCustomerInfo(
-                        name: _name,
-                        phone: _phone,
-                        address: _address,
+                        name: _nameController.text,
+                        phone: _phoneController.text,
+                        address: _addressController.text,
                       );
                       context.go('/package-details');
                     }
