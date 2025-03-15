@@ -52,8 +52,8 @@ class PaymentScreenState extends State<PaymentScreen> {
                     style: TextStyles.font16DarkBlueBold,
                   ),
                   verticalSpace(8),
-                  RadioOptionWidget(method: 'Credit Card', state: state),
                   RadioOptionWidget(method: 'Cash on Delivery', state: state),
+                  RadioOptionWidget(method: 'Credit Card', state: state),
                   RadioOptionWidget(method: 'Pay Later', state: state),
 
                   verticalSpace(8),

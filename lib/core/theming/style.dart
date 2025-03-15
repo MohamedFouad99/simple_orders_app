@@ -27,6 +27,12 @@ class TextStyles {
     fontWeight: FontWeightHelper.bold,
     color: ColorsManager.darkBlue,
   );
+  static TextStyle font18DarkBlueBold = TextStyle(
+    fontFamily: 'Almarai',
+    fontSize: 18.sp,
+    fontWeight: FontWeightHelper.bold,
+    color: ColorsManager.darkBlue,
+  );
   static TextStyle font14WhiteBold = TextStyle(
     fontFamily: 'Almarai',
     fontSize: 14.sp,

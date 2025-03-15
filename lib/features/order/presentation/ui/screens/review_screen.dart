@@ -1,4 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
+import 'package:simple_orders_app/core/helpers/spacing.dart';
+import '../../../../../core/theming/colors.dart';
+import '../../../../../core/theming/style.dart';
+import '../../../data/model/credit_card_payment.dart';
+import '../../../data/model/pay_later_payment.dart';
+import '../../controllers/order_cubit.dart';
+import '../widgets/custom_app_bar.dart';
+import '../widgets/custom_button.dart';
+import 'package:lottie/lottie.dart';
 
 class ReviewScreen extends StatelessWidget {
   const ReviewScreen({super.key});
@@ -6,8 +18,112 @@ class ReviewScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Review Order')),
-      body: Center(child: const Text('Order Summary Here')),
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(80.h),
+        child: ClipRRect(
+          borderRadius: const BorderRadius.only(
+            bottomLeft: Radius.circular(16),
+            bottomRight: Radius.circular(16),
+          ),
+          child: CustomAppBar(title: 'Review & Submit'),
+        ),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: BlocBuilder<OrderCubit, OrderState>(
+          builder: (context, state) {
+            // Success Message
+            if (state is OrderSubmitted) {
+              return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Lottie.asset(
+                      'assets/icons/correct.json',
+                      width: 90.w,
+                      fit: BoxFit.fill,
+                    ),
+                    const SizedBox(height: 10),
+                    Text(
+                      'Order Submitted Successfully!',
+                      style: TextStyles.font18DarkBlueBold,
+                    ),
+                    verticalSpace(18),
+                    CustomButton(
+                      label: 'Create New Order',
+                      onTap: () => context.go('/customer-info'),
+                    ),
+                  ],
+                ),
+              );
+            } else if (state is OrderSubmitting) {
+              return const Center(child: CircularProgressIndicator());
+            } else {
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _buildSectionTitle('Customer Info'),
+                  verticalSpace(6),
+                  _buildDetailRow('Name', state.name),
+                  _buildDetailRow('Phone', state.phone),
+                  _buildDetailRow('Address', state.address),
+                  Divider(color: ColorsManager.gray, thickness: 0.8),
+                  verticalSpace(16),
+                  _buildSectionTitle('Package Details'),
+                  verticalSpace(6),
+                  _buildDetailRow('Package Type', state.packageType),
+                  _buildDetailRow('Weight', '${state.weight} kg'),
+                  if (state.notes != null)
+                    _buildDetailRow('Notes', state.notes!),
+                  Divider(color: ColorsManager.gray, thickness: 0.8),
+                  verticalSpace(16),
+                  _buildSectionTitle('Payment Method'),
+                  verticalSpace(6),
+                  _buildDetailRow(
+                    'Method',
+                    state.paymentMethod?.methodName ?? 'Cash on Delivery',
+                  ),
+                  if (state.paymentMethod is CreditCardPayment)
+                    _buildDetailRow(
+                      'Card Number',
+                      (state.paymentMethod as CreditCardPayment).cardNumber,
+                    ),
+                  if (state.paymentMethod is PayLaterPayment)
+                    _buildDetailRow(
+                      'Phone',
+                      (state.paymentMethod as PayLaterPayment).phoneNumber,
+                    ),
+                  Divider(color: ColorsManager.gray, thickness: 0.8),
+                  verticalSpace(24),
+                  CustomButton(
+                    label: 'Submit Order',
+                    onTap: () {
+                      context.read<OrderCubit>().submitOrder();
+                    },
+                  ),
+                ],
+              );
+            }
+          },
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSectionTitle(String title) {
+    return Text(title, style: TextStyles.font18DarkBlueBold);
+  }
+
+  Widget _buildDetailRow(String label, String value) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(label, style: TextStyles.font14DarkBlueBold),
+          Text(value, style: TextStyles.font14DarkBlueRegular),
+        ],
+      ),
     );
   }
 }

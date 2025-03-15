@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:simple_orders_app/core/routes/router.dart';
-
 import 'features/order/presentation/controllers/order_cubit.dart';
 
 void main() {

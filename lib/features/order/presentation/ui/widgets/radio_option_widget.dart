@@ -19,7 +19,7 @@ class RadioOptionWidget extends StatelessWidget {
       contentPadding: EdgeInsets.zero,
       title: Text(method, style: TextStyles.font14DarkBlueRegular),
       value: method,
-      groupValue: state.paymentMethod?.methodName ?? "Credit Card",
+      groupValue: state.paymentMethod?.methodName ?? 'Cash on Delivery',
       dense: true,
       activeColor: ColorsManager.secondary,
       visualDensity: VisualDensity.compact,
